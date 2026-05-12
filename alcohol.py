@@ -32,42 +32,20 @@ i = 0
 while True:
     reading_alcohol = analog_read(0)
     reading_heart = analog_read(1)
-    reading_temp = analog_read(2)
+    reading_temp = analog_read(2)-175
 
     voltage1 = reading_alcohol * 3.3 / 1024
     voltage2 = reading_heart * 3.3 / 1024
     voltage3 = reading_temp * 3.3 / 1024
 
-    # print(i)
-    # print("Alcohol Reading=%d\tVoltage=%.2f" % (reading_alcohol, voltage1))
-    # print("Heart Raw Reading=%d\tVoltage=%.2f" % (reading_heart, voltage2))
-
-    # ----------------- BPM CALCULATION -----------------
+    print(i)
+    print("Alcohol Reading=%d\tVoltage=%.2f" % (reading_alcohol, voltage1))
+    print("Heart Raw Reading=%d\tVoltage=%.2f" % (reading_heart, voltage2))
+    print("Temperature Reading=%d\tVoltage=%.2f" % (reading_temp, voltage3))
     current_time = time.time()
 
-    if reading_heart > threshold:  
-        if (current_time - last_beat) > min_interval:
-            ibi = current_time - last_beat
-            last_beat = current_time
+    i+=1
 
-            bpm = 60 / ibi
-            bpm_values.append(bpm)
+    print("=======================================================")
 
-            if len(bpm_values) > 5:
-                bpm_values.pop(0)
-
-            avg_bpm = int(sum(bpm_values) / len(bpm_values))
-            print("♥ Beat detected!")
-            print("IBI =", ibi)
-            print("BPM =", avg_bpm)
-
-            # Example alert
-            if avg_bpm > 120 or avg_bpm < 45:
-                GPIO.output(buzzer_pin, GPIO.HIGH)
-            else:
-                GPIO.output(buzzer_pin, GPIO.LOW)
-
-    # print("=======================================================")
-
-    time.sleep(0.02)  # Faster sampling gives better BPM accuracy
-    i += 1
+    time.sleep(1) 

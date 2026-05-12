@@ -1,0 +1,20 @@
+## Setting Up Virtual Environment
+python3 -m venv tfenv
+
+## Activating The Virtual Environment
+source tfenv/bin/activate
+
+
+
+Transferring model on pi from PC
+scp model.tflite pi@raspberrypi:/home/pi/Desktop
+
+
+compiling arduino:
+arduino-cli compile --fqbn arduino:avr:uno .
+
+Arduino Burning inside arduino burner folder:
+arduino-cli upload -p /dev/ttyUSB0 --fqbn arduino:avr:uno .
+
+To open serial monitors:
+arduino-cli monitor -p /dev/ttyUSB0 -c baudrate=9600
